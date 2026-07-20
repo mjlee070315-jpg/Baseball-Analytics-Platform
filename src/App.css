@@ -2130,3 +2130,18 @@ justify-content:space-between;
 align-items:center;
 
 }
+.stat-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151 !important;   /* 검정/진회색 */
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  color: #111827 !important;   /* 숫자 검정 */
+  font-size: 54px;
+  font-weight: 900;
+  margin: 0;
+}
