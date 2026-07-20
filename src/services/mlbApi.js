@@ -125,271 +125,65 @@ export async function getPlayerDetails(id) {
 
 
 export async function getPlayerStats(id) {
-
-
   try {
-
-
+    const season = new Date().getFullYear();
 
     const hittingResponse = await fetch(
-
-      `${BASE_URL}/people/${id}/stats?stats=season&group=hitting`
-
+      `${BASE_URL}/people/${id}/stats?stats=season&group=hitting&season=${season}`
     );
-
-
-
-
 
     const pitchingResponse = await fetch(
-
-      `${BASE_URL}/people/${id}/stats?stats=season&group=pitching`
-
+      `${BASE_URL}/people/${id}/stats?stats=season&group=pitching&season=${season}`
     );
-
-
-
-
 
     const hittingData = await hittingResponse.json();
-
-
     const pitchingData = await pitchingResponse.json();
 
-
-
-
-
-
-
     const hitting =
-
-      hittingData.stats?.[0]
-      ?.splits?.[0]
-      ?.stat || {};
-
-
-
-
-
-
+      hittingData.stats?.[0]?.splits?.[0]?.stat || {};
 
     const pitching =
-
-      pitchingData.stats?.[0]
-      ?.splits?.[0]
-      ?.stat || {};
-
-
-
-
-
-
-
-
+      pitchingData.stats?.[0]?.splits?.[0]?.stat || {};
 
     return {
-
-
-
       // Hitting
-
-      avg:
-
-      hitting.avg || "-",
-
-
-
-      homeRuns:
-
-      hitting.homeRuns || "-",
-
-
-
-      rbi:
-
-      hitting.rbi || "-",
-
-
-
-      ops:
-
-      hitting.ops || "-",
-
-
-
-
+      avg: hitting.avg || "-",
+      homeRuns: hitting.homeRuns || "-",
+      rbi: hitting.rbi || "-",
+      ops: hitting.ops || "-",
+      hits: hitting.hits || "-",
+      atBats: hitting.atBats || "-",
+      baseOnBalls: hitting.baseOnBalls || "-",
+      strikeOuts: hitting.strikeOuts || "-",
 
       // Pitching
-
-      era:
-
-      pitching.era || "-",
-
-
-
-      wins:
-
-      pitching.wins || "-",
-
-
-
-      losses:
-
-      pitching.losses || "-",
-
-
-
-      strikeOuts:
-
-      pitching.strikeOuts || "-"
-
-
-
+      era: pitching.era || "-",
+      wins: pitching.wins || "-",
+      losses: pitching.losses || "-",
+      pitchingStrikeOuts: pitching.strikeOuts || "-",
     };
-
-
-
-
-
-  } catch(error) {
-
-
-    console.error(
-
-      "Stats Error:",
-
-      error
-
-    );
-
-
+  } catch (error) {
+    console.error("Stats Error:", error);
     return null;
-
-
   }
-
-
 }
-
-
-
-
-
-
-
-
-/* =========================
-   TODAY MLB GAMES
-========================= */
-
-
 export async function getTodayGames() {
-
-
   try {
-
-
-
-    const today = new Date()
-
-      .toISOString()
-
-      .split("T")[0];
-
-
-
-
+    const today = new Date().toISOString().split("T")[0];
 
     const response = await fetch(
-
-      `${BASE_URL}/schedule?sportId=1&date=${today}`
-
+      `${BASE_URL}/schedule?sportId=1&date=${today}&hydrate=team`
     );
-
-
-
-
 
     const data = await response.json();
 
-
-
-
-
-    const games =
-
-      data.dates?.[0]?.games || [];
-
-
-
-
-
-
-
-    return games.map((game)=>({
-
-
-
-      id:
-
-      game.gamePk,
-
-
-
-
-      homeTeam:
-
-      game.teams.home.team.name,
-
-
-
-
-
-      awayTeam:
-
-      game.teams.away.team.name,
-
-
-
-
-
-      status:
-
-      game.status.detailedState
-
-
-
-    }));
-
-
-
-
-
-
-
-  } catch(error) {
-
-
-
-    console.error(
-
-      "Games Error:",
-
-      error
-
-    );
-
-
-
+    return data.dates?.[0]?.games || [];
+  } catch (error) {
+    console.error("Games Error:", error);
     return [];
-
-
-
   }
-
-
 }
+
 export async function getPlayerGameLog(id) {
 
 
@@ -569,6 +363,157 @@ export async function getStandings() {
 
 
     return [];
+
+
+  }
+
+
+}
+/* =========================
+   TEAM DETAILS
+========================= */
+
+export async function getTeamDetails(teamId) {
+
+  try {
+
+    const response = await fetch(
+      `${BASE_URL}/teams/${teamId}`
+    );
+
+
+    const data = await response.json();
+
+
+    return data.teams?.[0] || null;
+
+
+  } catch(error) {
+
+
+    console.error(
+      "Team Detail Error:",
+      error
+    );
+
+
+    return null;
+
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+   TEAM ROSTER
+========================= */
+
+export async function getTeamRoster(teamId) {
+
+
+  try {
+
+
+    const response = await fetch(
+      `${BASE_URL}/teams/${teamId}/roster`
+    );
+
+
+    const data = await response.json();
+
+
+    return data.roster || [];
+
+
+
+  } catch(error) {
+
+
+    console.error(
+      "Roster Error:",
+      error
+    );
+
+
+    return [];
+
+
+  }
+
+
+}
+export async function getTeamStats(teamId) {
+
+  try {
+
+    const season = new Date().getFullYear();
+
+
+    const res = await fetch(
+      `${BASE_URL}/teams/${teamId}/stats?stats=season&group=hitting,pitching&season=${season}`
+    );
+
+
+    const data = await res.json();
+
+
+
+    const hitting =
+      data.stats?.find(
+        stat => stat.group.displayName === "hitting"
+      )
+      ?.splits?.[0]?.stat || {};
+
+
+
+    const pitching =
+      data.stats?.find(
+        stat => stat.group.displayName === "pitching"
+      )
+      ?.splits?.[0]?.stat || {};
+
+
+
+    return {
+
+
+      runs: hitting.runs || 0,
+
+      homeRuns: hitting.homeRuns || 0,
+
+      avg: hitting.avg || "-",
+
+      ops: hitting.ops || "-",
+
+
+
+      wins: pitching.wins || 0,
+
+      losses: pitching.losses || 0,
+
+      era: pitching.era || "-",
+
+      winPercentage: pitching.winPercentage || "-"
+
+
+    };
+
+
+
+  } catch(error) {
+
+
+    console.error(
+      "Team Stats Error:",
+      error
+    );
+
+
+    return null;
 
 
   }

@@ -1,64 +1,21 @@
-function GameCard({ title, date }) {
-
-
-
+function GameCard({ game }) {
   return (
-
-
-
     <div className="game-card">
+      <div className="team-row">
+        <span>{game.teams.away.team.name}</span>
+        <strong>{game.teams.away.score ?? "-"}</strong>
+      </div>
 
+      <div className="team-row">
+        <span>{game.teams.home.team.name}</span>
+        <strong>{game.teams.home.score ?? "-"}</strong>
+      </div>
 
-
-
-
-      <h3>
-
-
-        {title}
-
-
-      </h3>
-
-
-
-
-
-      <p>
-
-
-        MLB Regular Season Game
-
-
-      </p>
-
-
-
-
-
-
-      <span className="game-date">
-
-
-        {date}
-
-
-      </span>
-
-
-
-
-
+      <div className="game-status">
+        {game.status.detailedState}
+      </div>
     </div>
-
-
-
   );
-
-
-
 }
-
-
 
 export default GameCard;

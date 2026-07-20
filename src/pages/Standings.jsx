@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 
-import { getStandings } from "../services/mlbApi";
+import {
+  getStandings
+} from "../services/mlbApi";
+
+import TeamCard from "../components/TeamCard";
 
 
-function Standings(){
+
+function Standings({ setSelectedTeamId, setPage }) {
 
 
   const [standings, setStandings] = useState([]);
+
+  const [league, setLeague] = useState("ALL");
 
 
 
@@ -36,8 +43,47 @@ function Standings(){
 
 
 
+  function handleTeamClick(teamId){
 
-  const divisions = standings.reduce((acc, team)=>{
+  console.log("SELECTED TEAM ID:", teamId);
+
+  setSelectedTeamId(teamId);
+
+  console.log("CHANGING PAGE TO TEAM DETAIL");
+
+  setPage("teamDetail");
+
+}
+
+
+
+
+
+
+
+const filteredTeams = standings.filter((team)=>{
+
+
+  if(league === "ALL") return true;
+
+
+  if(league === "AL") {
+
+    return team.division.includes("American");
+
+  }
+
+
+  if(league === "NL") {
+
+    return team.division.includes("National");
+
+  }
+
+
+});
+
+  const divisions = filteredTeams.reduce((acc,team)=>{
 
 
     if(!acc[team.division]){
@@ -65,6 +111,9 @@ function Standings(){
 
 
 
+
+
+
   return(
 
 
@@ -82,141 +131,106 @@ function Standings(){
 
 
 
+
+
       <div className="league-buttons">
 
 
-        <button>
+  <button
 
-          American League
+  className={league==="AL" ? "active" : ""}
 
-        </button>
+  onClick={()=>setLeague("AL")}
 
+>
+  American League
+</button>
 
 
-        <button>
 
-          National League
 
-        </button>
+  <button
 
+    onClick={()=>setLeague("NL")}
 
-      </div>
+  >
 
+    National League
 
+  </button>
 
 
+</div>
 
 
 
-      {Object.keys(divisions).map((division)=>(
 
 
-        <div
 
-          className="division-card"
 
-          key={division}
 
-        >
 
+      {
+        Object.keys(divisions).map((division)=>(
 
 
-          <h2>
+          <div
 
-            {division}
+            className="division-card"
 
-          </h2>
+            key={division}
 
+          >
 
 
 
+            <h2>
 
+              {division}
 
+            </h2>
 
-          {divisions[division].map((team,index)=>(
 
 
-            <div
 
-              className="team-row"
 
-              key={team.team}
 
 
-            >
+            {
+              divisions[division].map((team,index)=>(
 
 
+                <TeamCard
 
 
+                  key={team.teamId}
 
-              <div className="team-info">
 
+                  team={team}
 
 
-                <img
+                  index={index}
 
-src={team.logo}
 
-alt={team.team}
+                  onClick={handleTeamClick}
 
-/>
 
+                />
 
 
+              ))
+            }
 
-                <span>
 
-                  {index + 1}. {team.team}
 
-                </span>
 
+          </div>
 
 
-              </div>
+        ))
+      }
 
 
-
-
-
-
-
-              <div className="team-record">
-
-
-
-                {team.wins} - {team.losses}
-
-
-
-                <small>
-
-                  {" "}
-
-                  ({team.winPercentage})
-
-                </small>
-
-
-
-              </div>
-
-
-
-
-
-            </div>
-
-
-
-          ))}
-
-
-
-        </div>
-
-
-
-      ))}
 
 
 

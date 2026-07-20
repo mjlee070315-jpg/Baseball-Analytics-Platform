@@ -227,10 +227,10 @@ function Home() {
           <div ref={profileRef}>
 
             <PlayerProfile
-              player={selectedPlayer}
-              stats={stats}
-              currentSeason={2025}
-            />
+  player={selectedPlayer}
+  stats={stats}
+  currentSeason={2026}
+/>
 
           </div>
 
@@ -377,35 +377,18 @@ function Home() {
 
           </div>
 
-          <div className="game-grid">
-
-            {games.length > 0 ? (
-
-              games.map((game) => (
-
-                <GameCard
-
-                  key={game.id}
-
-                  title={`${game.awayTeam} vs ${game.homeTeam}`}
-
-                  date={game.status}
-
-                />
-
-              ))
-
-            ) : (
-
-              <p>
-
-                No games scheduled today.
-
-              </p>
-
-            )}
-
-          </div>
+          <div className="games-grid">
+  {games.length > 0 ? (
+    games.map((game) => (
+      <GameCard
+        key={game.gamePk}
+        game={game}
+      />
+    ))
+  ) : (
+    <p>No games scheduled today.</p>
+  )}
+</div>
 
         </section>
 
