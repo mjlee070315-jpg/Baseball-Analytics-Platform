@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 import Navbar from "./components/Navbar";
+
+import { getTodayGames } from "./services/mlbApi";
 
 import Home from "./pages/Home";
 import Standings from "./pages/Standings";
 import Analytics from "./pages/Analytics";
 import Games from "./pages/Games";
 import TeamDetail from "./pages/TeamDetail";
+import GameDetail from "./pages/GameDetail";
 
 import "./App.css";
 
@@ -23,6 +27,10 @@ function App() {
   const [selectedTeamId, setSelectedTeamId] = useState(null);
 
 
+  const [selectedGame, setSelectedGame] = useState(null);
+
+  const [games, setGames] = useState([]);
+
   const [stats, setStats] = useState(null);
 
 
@@ -34,23 +42,37 @@ function App() {
   // 선수 선택 함수
   const handlePlayerSelect = (player) => {
 
+  setSelectedPlayer(player);
 
-    setSelectedPlayer(player);
+  setStats(null);
 
+  setGameLog([]);
 
-    // 기존 데이터 초기화
+  setPage("analytics");
 
-    setStats(null);
+};
 
-    setGameLog([]);
+  useEffect(() => {
 
+  async function loadGames() {
 
-    // 선수 프로필 화면으로 이동
+    try {
 
-    setPage("home");
+      const data = await getTodayGames();
 
+      setGames(data);
 
-  };
+    } catch (err) {
+
+      console.error(err);
+
+    }
+
+  }
+
+  loadGames();
+
+}, []);
 
 
 
@@ -68,26 +90,25 @@ function App() {
 
 
 
+
       {
         page === "home" && (
 
 
           <Home
+  games={games}
+  setPage={setPage}
+  setSelectedGame={setSelectedGame}
 
-            selectedPlayer={selectedPlayer}
+  selectedPlayer={selectedPlayer}
+  setSelectedPlayer={handlePlayerSelect}
 
-            setSelectedPlayer={handlePlayerSelect}
+  stats={stats}
+  setStats={setStats}
 
-            stats={stats}
-
-            setStats={setStats}
-
-            gameLog={gameLog}
-
-            setGameLog={setGameLog}
-
-
-          />
+  gameLog={gameLog}
+  setGameLog={setGameLog}
+/>
 
 
         )
@@ -151,16 +172,14 @@ function App() {
 
 
       {
-        page === "analytics" && (
+        page === "games" && (
 
 
-          <Analytics
+          <Games
 
+            setSelectedGame={setSelectedGame}
 
-            stats={stats}
-
-            gameLog={gameLog}
-
+            setPage={setPage}
 
           />
 
@@ -175,15 +194,44 @@ function App() {
 
 
       {
-        page === "games" && (
+        page === "gameDetail" && (
 
 
-          <Games />
+          <GameDetail
+
+            game={selectedGame}
+
+            setPage={setPage}
+
+          />
 
 
         )
       }
 
+
+
+
+
+
+
+      {
+  page === "analytics" && (
+
+    <Analytics
+
+  selectedPlayer={selectedPlayer}
+
+  stats={stats}
+
+  gameLog={gameLog}
+
+  setPage={setPage}
+
+/>
+
+  )
+}
 
 
 

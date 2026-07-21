@@ -1,108 +1,154 @@
 import {
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
+  CartesianGrid
 } from "recharts";
 
+
 function PerformanceChart({ gameLog }) {
+
+
   if (!gameLog || gameLog.length === 0) {
-    return null;
-  }
 
-  const data = gameLog.map((game, index) => ({
-    game: index + 1,
-    OPS: Number(game.ops),
-    AVG: Number(game.avg),
-  }));
+    return (
 
-  return (
-    <div className="chart-card">
-      <div className="chart-header">
-        <h2>Season Performance Trend</h2>
-        <p>OPS & AVG progression throughout the season</p>
+      <div className="chart-card">
+
+        <h2>
+          Recent Performance
+        </h2>
+
+        <p>
+          No game log available
+        </p>
+
       </div>
 
-      <ResponsiveContainer width="100%" height={380}>
-        <AreaChart
-          data={data}
-          margin={{
-            top: 20,
-            right: 25,
-            left: 5,
-            bottom: 5,
-          }}
-        >
-          <defs>
-            <linearGradient id="opsGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#2563eb" stopOpacity={0.45} />
-              <stop offset="95%" stopColor="#2563eb" stopOpacity={0.03} />
-            </linearGradient>
+    );
 
-            <linearGradient id="avgGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#ef4444" stopOpacity={0.35} />
-              <stop offset="95%" stopColor="#ef4444" stopOpacity={0.03} />
-            </linearGradient>
-          </defs>
+  }
+
+
+
+  const data = gameLog
+    .slice(0,10)
+    .reverse()
+    .map((game,index)=>({
+
+      name:
+      game.date
+      ? game.date.slice(5)
+      : `Game ${index+1}`,
+
+      AVG:
+      Number(game.avg) || 0,
+
+      OPS:
+      Number(game.ops) || 0,
+
+      HR:
+      Number(game.homeRuns) || 0
+
+    }));
+
+
+
+
+  return (
+
+    <div className="chart-card">
+
+
+      <h2>
+        Recent Performance
+      </h2>
+
+
+      <p>
+        Last 10 games performance trend
+      </p>
+
+
+
+
+      <ResponsiveContainer
+
+        width="100%"
+
+        height={350}
+
+      >
+
+
+        <LineChart
+
+          data={data}
+
+        >
+
 
           <CartesianGrid
-            stroke="#e5e7eb"
+
             strokeDasharray="3 3"
-            vertical={false}
+
           />
+
 
           <XAxis
-            dataKey="game"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "#6b7280", fontSize: 13 }}
+
+            dataKey="name"
+
           />
 
-          <YAxis
-            domain={[0, 1]}
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "#6b7280", fontSize: 13 }}
-          />
 
-          <Tooltip
-            formatter={(value) => Number(value).toFixed(3)}
-            contentStyle={{
-              borderRadius: "12px",
-              border: "none",
-              boxShadow: "0 8px 24px rgba(0,0,0,.15)",
-            }}
-          />
+          <YAxis />
 
-          <Legend verticalAlign="top" height={40} />
 
-          <Area
+          <Tooltip />
+
+
+
+          <Line
+
             type="monotone"
-            dataKey="OPS"
-            stroke="#2563eb"
-            strokeWidth={3}
-            fill="url(#opsGradient)"
-            dot={false}
-            activeDot={{ r: 6 }}
-          />
 
-          <Area
-            type="monotone"
             dataKey="AVG"
-            stroke="#ef4444"
+
             strokeWidth={3}
-            fill="url(#avgGradient)"
-            dot={false}
-            activeDot={{ r: 6 }}
+
           />
-        </AreaChart>
+
+
+
+          <Line
+
+            type="monotone"
+
+            dataKey="OPS"
+
+            strokeWidth={3}
+
+          />
+
+
+
+        </LineChart>
+
+
       </ResponsiveContainer>
+
+
+
     </div>
+
   );
+
+
 }
+
 
 export default PerformanceChart;

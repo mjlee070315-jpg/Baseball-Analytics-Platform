@@ -4,9 +4,9 @@ import {
   searchPlayers,
   getPlayerDetails,
   getPlayerStats,
-  getTodayGames,
   getPlayerGameLog,
 } from "../services/mlbApi";
+
 
 import SearchBar from "../components/SearchBar";
 import PlayerCard from "../components/PlayerCard";
@@ -15,123 +15,276 @@ import StatsChart from "../components/StatsChart";
 import PerformanceChart from "../components/PerformanceChart";
 import CompareCard from "../components/CompareCard";
 import GameCard from "../components/GameCard";
+import PlayerModal from "../components/PlayerModal";
 
-function Home() {
+function Home({
+
+  games,
+  setPage,
+  setSelectedGame,
+
+  selectedPlayer,
+  setSelectedPlayer,
+
+  stats,
+  setStats,
+
+  gameLog,
+  setGameLog
+
+}) {
+
 
   const [search, setSearch] = useState("");
+
   const [players, setPlayers] = useState([]);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [stats, setStats] = useState(null);
-  const [gameLog, setGameLog] = useState([]);
-  const [games, setGames] = useState([]);
+  
+  const [trendingPlayers, setTrendingPlayers] = useState([]);
+
+  const [modalPlayer, setModalPlayer] = useState(null);
+
+useEffect(()=>{
+
+
+  const loadTrendingPlayers = async()=>{
+
+
+    const ids = [
+
+      660271, // Shohei Ohtani
+      592450, // Aaron Judge
+      665742, // Juan Soto
+      605141  // Mookie Betts
+
+    ];
+
+
+
+    const data = await Promise.all(
+
+      ids.map(async(id)=>{
+
+
+        const player = await getPlayerDetails(id);
+
+        const stats = await getPlayerStats(id);
+
+
+
+        return {
+
+  ...player,
+
+  headshot:
+  `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_auto:best/v1/people/${id}/action/vertical/current`,
+
+  stats
+
+};
+
+
+      })
+
+    );
+
+
+
+    setTrendingPlayers(data);
+
+
+  };
+
+
+
+  loadTrendingPlayers();
+
+
+},[]);
+
 
   const [compareSearch, setCompareSearch] = useState("");
+
   const [comparePlayer, setComparePlayer] = useState(null);
+
   const [compareStats, setCompareStats] = useState(null);
 
+
+
   const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
+
+
 
   const profileRef = useRef();
 
-  useEffect(() => {
 
-    const loadGames = async () => {
 
-      const result = await getTodayGames();
 
-      setGames(result);
 
-    };
+  const handleSearch = async()=>{
 
-    loadGames();
 
-  }, []);
+    if(search.trim()==="") return;
 
-  const handleSearch = async () => {
-
-    if (search.trim() === "") return;
 
     setLoading(true);
+
     setError("");
 
-    try {
+
+
+    try{
+
 
       const result = await searchPlayers(search);
 
-      if (result.length === 0) {
+
+
+      if(result.length===0){
+
 
         setPlayers([]);
-        setError("No player found. Try another name.");
+
+        setError(
+          "No player found. Try another name."
+        );
+
 
       } else {
 
+
         setPlayers(result);
+
 
       }
 
-    } catch {
 
-      setError("Something went wrong. Please try again.");
+
+    } catch(error){
+
+
+      console.error(error);
+
+      setError(
+        "Something went wrong."
+      );
+
 
     }
+
+
 
     setLoading(false);
 
-  };
-
-  const handlePlayerClick = async (id) => {
-
-    const player = await getPlayerDetails(id);
-
-    setSelectedPlayer(player);
-
-    const playerStats = await getPlayerStats(id);
-
-    setStats(playerStats);
-
-    const log = await getPlayerGameLog(id);
-
-    setGameLog(log);
-
-    setTimeout(() => {
-
-      profileRef.current?.scrollIntoView({
-
-        behavior: "smooth",
-        block: "start",
-
-      });
-
-    }, 300);
 
   };
 
-  const handleCompareSearch = async () => {
 
-    if (compareSearch.trim() === "") return;
+
+
+
+
+
+
+  const handlePlayerClick = async(player)=>{
+
+
+  const playerData = await getPlayerDetails(player.id);
+
+
+  const statsData = await getPlayerStats(player.id);
+
+
+  const logData = await getPlayerGameLog(player.id);
+
+
+
+  setSelectedPlayer(playerData);
+
+
+  setStats(statsData);
+
+
+  setGameLog(logData);
+
+
+
+  setModalPlayer({
+
+    ...playerData,
+
+    headshot:
+    playerData.image ||
+    `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_auto:best/v1/people/${playerData.id}/action/vertical/current`,
+
+    stats: statsData
+
+  });
+
+
+
+  setPage("analytics");
+
+
+};
+
+
+
+
+
+
+
+
+
+  const handleCompareSearch = async()=>{
+
+
+    if(compareSearch.trim()==="") return;
+
+
 
     const result = await searchPlayers(compareSearch);
 
-    if (result.length > 0) {
 
-      const player = await getPlayerDetails(result[0].id);
 
-      const playerStats = await getPlayerStats(result[0].id);
+    if(result.length>0){
 
-      setComparePlayer(player);
 
-      setCompareStats(playerStats);
+      const playerData =
+        await getPlayerDetails(result[0].id);
+
+
+
+      const statsData =
+        await getPlayerStats(result[0].id);
+
+
+
+      setComparePlayer(playerData);
+
+      setCompareStats(statsData);
+
 
     }
 
+
   };
+
+
+
+
+
+
+
 
   return (
 
     <>
 
+
       <section className="hero">
+
 
         <h1>
 
@@ -139,21 +292,138 @@ function Home() {
 
         </h1>
 
+
+
         <p>
 
           Search MLB Players and Analyze Real Statistics
 
         </p>
 
+
+
+
         <SearchBar
+
           search={search}
+
           setSearch={setSearch}
+
           onSearch={handleSearch}
+
         />
+
 
       </section>
 
+      <section className="today-games-section">
+
+  <div className="today-header">
+
+    <div>
+      <h2>Today's Games</h2>
+      <p>Live scores, scheduled games and finals</p>
+    </div>
+
+
+    <button
+      className="view-all-btn"
+      onClick={() => setPage("games")}
+    >
+      View All →
+    </button>
+
+  </div>
+
+
+  {games?.length > 0 && (
+
+    <div className="today-games-scroll">
+
+      {games.slice(0,6).map((game)=>(
+
+        <GameCard
+
+          key={game.gamePk}
+
+          game={game}
+
+          onClick={(selectedGame)=>{
+
+            setSelectedGame(selectedGame);
+
+            setPage("gameDetail");
+
+          }}
+
+        />
+
+      ))}
+
+    </div>
+
+  )}
+
+</section>
+
+
+
+
+
+<section className="trending-section">
+
+
+  <div className="today-header">
+
+    <div>
+
+      <h2>🔥 Trending Players</h2>
+
+      <p>Top MLB superstars</p>
+
+    </div>
+
+  </div>
+
+
+
+  <div className="trending-grid">
+
+
+    {
+      trendingPlayers.map((player)=>(
+
+        <PlayerCard
+
+          key={player.id}
+
+          player={player}
+
+          onClick={handlePlayerClick}
+
+        />
+
+      ))
+    }
+
+
+  </div>
+
+
+</section>
+
+
+
+
+
+
+
       <main className="container">
+
+
+
+
+
 
         {loading && (
 
@@ -165,6 +435,12 @@ function Home() {
 
         )}
 
+
+
+
+
+
+
         {error && (
 
           <h3 className="error">
@@ -175,229 +451,362 @@ function Home() {
 
         )}
 
-        {players.length > 0 && (
 
-          <section className="results-section">
 
-            <div className="section-header">
 
-              <span></span>
 
-              <div>
 
-                <h2>
 
-                  Search Results
 
-                </h2>
+        {
+          players.length>0 && (
 
-                <p>
 
-                  Find MLB players and explore analytics
+            <section className="results-section">
 
-                </p>
+
+              <div className="section-header">
+
+
+                <span></span>
+
+
+                <div>
+
+
+                  <h2>
+
+                    Search Results
+
+                  </h2>
+
+
+
+                  <p>
+
+                    Find MLB players and explore analytics
+
+                  </p>
+
+
+                </div>
+
 
               </div>
 
+
+
+
+
+
+
+              <div className="stats-grid">
+
+
+                {
+                  players.map((player)=>(
+
+
+                    <PlayerCard
+
+
+                      key={player.id}
+
+
+                      player={player}
+
+
+                      onClick={handlePlayerClick}
+
+
+                    />
+
+
+                  ))
+                }
+
+
+              </div>
+
+
+
+            </section>
+
+
+          )
+        }
+
+
+
+
+
+
+
+
+        {
+          selectedPlayer && (
+
+
+            <div ref={profileRef}>
+
+
+              <PlayerProfile
+
+                player={selectedPlayer}
+
+                stats={stats}
+
+                currentSeason={2026}
+
+              />
+
+
             </div>
 
-            <div className="stats-grid">
 
-              {players.map((player) => (
+          )
+        }
 
-                <PlayerCard
 
-                  key={player.id}
 
-                  player={player}
 
-                  onClick={handlePlayerClick}
+
+
+
+
+        {
+          selectedPlayer && (
+
+
+            <section className="compare-section">
+
+
+              <div className="section-header">
+
+
+                <span></span>
+
+
+                <div>
+
+
+                  <h2>
+
+                    Compare Player
+
+                  </h2>
+
+
+                  <p>
+
+                    Compare another MLB player
+
+                  </p>
+
+
+                </div>
+
+
+              </div>
+
+
+
+
+
+
+
+              <div className="search-container">
+
+
+                <input
+
+
+                  className="search"
+
+
+                  placeholder="Search player to compare..."
+
+
+                  value={compareSearch}
+
+
+                  onChange={(e)=>
+                    setCompareSearch(e.target.value)
+                  }
+
 
                 />
 
-              ))}
 
-            </div>
 
-          </section>
 
-        )}
-                {selectedPlayer && (
+                <button
 
-          <div ref={profileRef}>
 
-            <PlayerProfile
-  player={selectedPlayer}
-  stats={stats}
-  currentSeason={2026}
-/>
+                  className="search-button"
 
-          </div>
 
-        )}
+                  onClick={handleCompareSearch}
 
-        {selectedPlayer && (
 
-          <section className="compare-section">
+                >
 
-            <div className="section-header">
+                  Compare
 
-              <span></span>
 
-              <div>
+                </button>
 
-                <h2>
 
-                  Compare Player
-
-                </h2>
-
-                <p>
-
-                  Compare another MLB player with the selected player
-
-                </p>
 
               </div>
 
-            </div>
 
-            <div className="search-container">
 
-              <input
+            </section>
 
-                className="search"
 
-                placeholder="Search player to compare..."
+          )
+        }
 
-                value={compareSearch}
 
-                onChange={(e) =>
-                  setCompareSearch(e.target.value)
-                }
 
-              />
 
-              <button
 
-                className="search-button"
 
-                onClick={handleCompareSearch}
 
-              >
 
-                Compare
 
-              </button>
+        {
+          stats && (
 
-            </div>
 
-          </section>
+            <section className="analytics-section">
 
-        )}
 
-        {stats && (
+              <div className="section-header">
 
-          <section className="analytics-section">
 
-            <div className="section-header">
+                <span></span>
 
-              <span></span>
 
-              <div>
+                <div>
 
-                <h2>
 
-                  Player Analytics
+                  <h2>
 
-                </h2>
+                    Player Analytics
 
-                <p>
+                  </h2>
 
-                  Performance charts powered by MLB Stats API
 
-                </p>
+                  <p>
+
+                    Performance charts powered by MLB Stats API
+
+                  </p>
+
+
+                </div>
+
 
               </div>
 
-            </div>
 
-            <StatsChart
 
-              stats={stats}
 
-            />
 
-            <PerformanceChart
 
-              gameLog={gameLog}
 
-            />
+              <StatsChart
 
-            {comparePlayer && compareStats && (
-
-              <CompareCard
-
-                player1={selectedPlayer}
-
-                player2={comparePlayer}
-
-                stats1={stats}
-
-                stats2={compareStats}
+                stats={stats}
 
               />
 
-            )}
 
-          </section>
 
-        )}
-                <section className="games-section">
 
-          <div className="section-header">
+              <PerformanceChart
 
-            <span></span>
+                gameLog={gameLog}
 
-            <div>
+              />
 
-              <h2>
 
-                Today's Games
 
-              </h2>
 
-              <p>
 
-                Live MLB Matchups & Schedule
 
-              </p>
 
-            </div>
+              {
+                comparePlayer && compareStats && (
 
-          </div>
 
-          <div className="games-grid">
-  {games.length > 0 ? (
-    games.map((game) => (
-      <GameCard
-        key={game.gamePk}
-        game={game}
-      />
-    ))
-  ) : (
-    <p>No games scheduled today.</p>
-  )}
-</div>
+                  <CompareCard
 
-        </section>
 
-      </main>
+                    player1={selectedPlayer}
+
+
+                    player2={comparePlayer}
+
+
+                    stats1={stats}
+
+
+                    stats2={compareStats}
+
+
+                  />
+
+
+                )
+              }
+
+
+
+
+
+
+            </section>
+
+
+          )
+        }
+
+
+
+
+
+
+                   </main>
+
+
+        {
+          modalPlayer && (
+
+            <PlayerModal
+
+              player={modalPlayer}
+
+              onClose={()=>setModalPlayer(null)}
+
+              setPage={setPage}
+
+              setSelectedPlayer={setSelectedPlayer}
+
+            />
+
+          )
+        }
+
 
     </>
 
   );
 
 }
+
+
 
 export default Home;

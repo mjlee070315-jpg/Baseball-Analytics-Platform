@@ -43,7 +43,43 @@ export async function searchPlayers(name) {
 }
 
 
+export async function getGameLive(gamePk){
 
+  try{
+
+    const response = await fetch(
+      `https://statsapi.mlb.com/api/v1.1/game/${gamePk}/feed/live`
+    );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        `Live game fetch failed: ${response.status}`
+      );
+
+    }
+
+
+    const data = await response.json();
+
+
+    return data;
+
+
+  }catch(error){
+
+    console.error(
+      "getGameLive ERROR:",
+      error
+    );
+
+
+    return null;
+
+  }
+
+}
 
 
 /* =========================
@@ -84,8 +120,10 @@ export async function getPlayerDetails(id) {
 
 
       image:
+`https://img.mlbstatic.com/mlb-photos/image/upload/w_640,q_auto:best/v1/people/${id}/action/vertical/current`,
 
-      `https://img.mlbstatic.com/mlb-photos/image/upload/w_640,q_auto:best/v1/people/${id}/action/vertical/current`
+headshot:
+`https://img.mlbstatic.com/mlb-photos/image/upload/w_640,q_auto:best/v1/people/${id}/action/vertical/current`
 
 
 
@@ -124,64 +162,94 @@ export async function getPlayerDetails(id) {
 ========================= */
 
 
-export async function getPlayerStats(id) {
+export async function getPlayerStats(playerId){
+
+  const season = new Date().getFullYear();
+
+
   try {
-    const season = new Date().getFullYear();
 
-    const hittingResponse = await fetch(
-      `${BASE_URL}/people/${id}/stats?stats=season&group=hitting&season=${season}`
+    const hittingRes = await fetch(
+      `${BASE_URL}/people/${playerId}/stats?stats=season&group=hitting&season=${season}`
     );
 
-    const pitchingResponse = await fetch(
-      `${BASE_URL}/people/${id}/stats?stats=season&group=pitching&season=${season}`
+
+    const pitchingRes = await fetch(
+      `${BASE_URL}/people/${playerId}/stats?stats=season&group=pitching&season=${season}`
     );
 
-    const hittingData = await hittingResponse.json();
-    const pitchingData = await pitchingResponse.json();
+
+    const hittingData = await hittingRes.json();
+
+    const pitchingData = await pitchingRes.json();
+
+
 
     const hitting =
       hittingData.stats?.[0]?.splits?.[0]?.stat || {};
 
+
+
     const pitching =
       pitchingData.stats?.[0]?.splits?.[0]?.stat || {};
 
+
+
+
     return {
-      // Hitting
+
+      // hitting
+
       avg: hitting.avg || "-",
-      homeRuns: hitting.homeRuns || "-",
-      rbi: hitting.rbi || "-",
+
       ops: hitting.ops || "-",
-      hits: hitting.hits || "-",
-      atBats: hitting.atBats || "-",
-      baseOnBalls: hitting.baseOnBalls || "-",
-      strikeOuts: hitting.strikeOuts || "-",
 
-      // Pitching
+      homeRuns: hitting.homeRuns || 0,
+
+      rbi: hitting.rbi || 0,
+
+      hits: hitting.hits || 0,
+
+      runs: hitting.runs || 0,
+
+      atBats: hitting.atBats || 0,
+
+      strikeOuts: hitting.strikeOuts || 0,
+
+
+      // pitching
+
       era: pitching.era || "-",
-      wins: pitching.wins || "-",
-      losses: pitching.losses || "-",
-      pitchingStrikeOuts: pitching.strikeOuts || "-",
-    };
-  } catch (error) {
-    console.error("Stats Error:", error);
-    return null;
-  }
-}
-export async function getTodayGames() {
-  try {
-    const today = new Date().toISOString().split("T")[0];
 
-    const response = await fetch(
-      `${BASE_URL}/schedule?sportId=1&date=${today}&hydrate=team`
+      wins: pitching.wins || 0,
+
+      losses: pitching.losses || 0,
+
+      strikeouts: pitching.strikeOuts || 0,
+
+      inningsPitched: pitching.inningsPitched || "0.0",
+
+      whip: pitching.whip || "-",
+
+      saves: pitching.saves || 0
+
+
+    };
+
+
+  } catch(error){
+
+    console.error(
+      "Stats Error:",
+      error
     );
 
-    const data = await response.json();
 
-    return data.dates?.[0]?.games || [];
-  } catch (error) {
-    console.error("Games Error:", error);
-    return [];
+    return null;
+
   }
+
+
 }
 
 export async function getPlayerGameLog(id) {
@@ -518,5 +586,23 @@ export async function getTeamStats(teamId) {
 
   }
 
+
+}
+export async function getTodayGames(){
+
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
+
+
+  const res = await fetch(
+    `https://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&date=${today}`
+  );
+
+
+  const data = await res.json();
+
+
+  return data.dates?.[0]?.games || [];
 
 }

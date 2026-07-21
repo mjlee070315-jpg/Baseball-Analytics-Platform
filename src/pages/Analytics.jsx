@@ -1,86 +1,229 @@
 import StatsChart from "../components/StatsChart";
 import PerformanceChart from "../components/PerformanceChart";
+import StatSummary from "../components/StatSummary";
+
 
 function Analytics({
+
+  selectedPlayer,
 
   stats,
 
   gameLog,
 
+  setPage
+
 }) {
+
 
   return (
 
-    <main className="container">
+    <main className="container analytics-page">
+
 
       <section className="analytics-section">
 
+
+        <button
+
+          className="back-button"
+
+          onClick={()=>setPage("home")}
+
+        >
+
+          ← Back to Players
+
+        </button>
+
+
+
+
+
         <div className="section-header">
 
+
           <span></span>
+
 
           <div>
 
             <h2>
-
               MLB Analytics Dashboard
-
             </h2>
 
+
             <p>
-
-              Visualize player performance using MLB Stats API
-
+              Advanced player performance analysis
             </p>
 
+
           </div>
+
 
         </div>
 
-        {stats ? (
 
-          <>
 
-            <StatsChart
 
-              stats={stats}
 
-            />
 
-            <PerformanceChart
 
-              gameLog={gameLog}
+        {
+          selectedPlayer && (
 
-            />
+            <div className="analytics-profile">
 
-          </>
 
-        ) : (
+<img
 
-          <div className="empty-page">
+className="analytics-player-image"
 
-            <h2>
+src={selectedPlayer.image}
 
-              Search a player first
+alt={selectedPlayer.fullName}
 
-            </h2>
+/>
 
-            <p>
 
-              Analytics will appear here after selecting a player.
 
-            </p>
+<div className="analytics-player-info">
 
-          </div>
 
-        )}
+<h1>
+{selectedPlayer.fullName}
+</h1>
+
+
+<p>
+{selectedPlayer.currentTeam?.name || "MLB"}
+</p>
+
+
+<div className="player-tags">
+
+
+<span>
+{selectedPlayer.primaryPosition?.name || "Player"}
+</span>
+
+
+<span>
+MLB Analytics
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+          )
+
+        }
+
+
+
+
+
+
+
+
+        {
+          stats ? (
+
+            <>
+
+
+              <StatSummary
+
+                stats={stats}
+
+              />
+
+
+
+
+              <div className="chart-wrapper">
+
+
+                <StatsChart
+
+                  stats={stats}
+
+                />
+
+
+              </div>
+
+
+
+
+
+              {
+                gameLog?.length > 0 && (
+
+                  <div className="chart-wrapper">
+
+
+                    <PerformanceChart
+
+                      gameLog={gameLog}
+
+                    />
+
+
+                  </div>
+
+                )
+              }
+
+
+
+            </>
+
+
+          ) : (
+
+
+            <div className="empty-page">
+
+
+              <h2>
+
+                Select a player
+
+              </h2>
+
+
+              <p>
+
+                Player statistics will appear here.
+
+              </p>
+
+
+            </div>
+
+
+          )
+        }
+
+
+
 
       </section>
+
 
     </main>
 
   );
 
 }
+
 
 export default Analytics;
