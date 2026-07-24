@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import "../styles/standings.css";
+
 import {
   getStandings
 } from "../services/mlbApi";

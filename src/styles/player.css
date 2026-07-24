@@ -1,0 +1,965 @@
+/* ================================
+   PLAYER COMPONENTS
+   MLB ANALYTICS STYLE
+================================ */
+
+
+/* ================================
+   PLAYER CARD
+================================ */
+
+.player-card {
+
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #eef5ff
+  );
+
+  border-radius:18px;
+
+  padding:18px;
+
+  width:260px;
+
+  min-height:300px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  box-shadow:
+    0 10px 25px rgba(15,50,100,0.12);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+
+  cursor:pointer;
+
+  box-sizing:border-box;
+
+}
+
+
+.player-card:hover {
+
+  transform:translateY(-8px);
+
+  box-shadow:
+    0 18px 35px rgba(15,50,100,0.22);
+
+}
+
+
+
+/* ================================
+   PLAYER IMAGE
+================================ */
+
+
+.player-image {
+
+  width:120px;
+
+  height:120px;
+
+  object-fit:contain;
+
+  border-radius:50%;
+
+  background:#e8f1ff;
+
+  padding:8px;
+
+}
+
+
+
+.player-placeholder {
+
+  width:120px;
+
+  height:120px;
+
+  border-radius:50%;
+
+  background:#dbeafe;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:42px;
+
+  color:#2563eb;
+
+}
+
+
+
+/* ================================
+   PLAYER CONTENT
+================================ */
+
+
+.player-content {
+
+  width:100%;
+
+  text-align:center;
+
+}
+
+
+
+.player-content h3 {
+
+  margin:12px 0 6px;
+
+  font-size:20px;
+
+  color:#0f172a;
+
+}
+
+
+
+.player-content p {
+
+  margin:5px 0;
+
+  color:#475569;
+
+  font-size:14px;
+
+}
+
+
+
+/* ================================
+   PLAYER PROFILE
+================================ */
+
+
+.player-profile {
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:30px auto;
+
+  padding:30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #edf5ff
+    );
+
+  border-radius:24px;
+
+
+  box-shadow:
+
+    0 15px 40px rgba(15,40,90,.15);
+
+  box-sizing:border-box;
+
+}
+
+
+
+/* PROFILE HEADER */
+
+
+.profile-header {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:30px;
+
+  margin-bottom:30px;
+
+}
+
+
+
+.profile-header img {
+
+  width:160px;
+
+  height:160px;
+
+  object-fit:contain;
+
+  border-radius:50%;
+
+  background:#eaf2ff;
+
+}
+
+
+
+.profile-info h2 {
+
+  margin:0;
+
+  font-size:32px;
+
+  color:#0f172a;
+
+}
+
+
+
+.profile-info p {
+
+  color:#475569;
+
+  font-size:16px;
+
+}
+
+
+
+/* ================================
+   STATS GRID
+================================ */
+
+
+.stats-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(140px,1fr));
+
+  gap:18px;
+
+  width:100%;
+
+}
+
+
+
+.stat-card {
+
+  background:white;
+
+  border-radius:16px;
+
+  padding:18px;
+
+  text-align:center;
+
+  box-shadow:
+
+    0 8px 20px rgba(0,0,0,.08);
+
+  box-sizing:border-box;
+
+  min-width:0;
+
+}
+
+
+
+.stat-card h3 {
+
+  margin:0 0 10px;
+
+  font-size:14px;
+
+  color:#64748b;
+
+}
+
+
+
+.stat-card strong {
+
+  font-size:26px;
+
+  color:#2563eb;
+
+}
+
+
+
+.stat-card p {
+
+  margin:0;
+
+}
+
+
+
+/* ================================
+   PLAYER LIST
+================================ */
+
+
+.player-list {
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:22px;
+
+}
+
+
+
+/* ================================
+   TRENDING PLAYERS
+================================ */
+
+
+.trending-container {
+
+  display:flex;
+
+  gap:20px;
+
+  overflow-x:auto;
+
+  padding:15px 5px;
+
+  scroll-behavior:smooth;
+
+}
+
+
+
+.trending-container::-webkit-scrollbar {
+
+  height:8px;
+
+}
+
+
+
+.trending-container::-webkit-scrollbar-thumb {
+
+  background:#93c5fd;
+
+  border-radius:10px;
+
+}
+
+
+
+/* ================================
+   BUTTON
+================================ */
+
+
+.player-button {
+
+  margin-top:15px;
+
+  padding:10px 18px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#2563eb;
+
+  color:white;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+
+
+.player-button:hover {
+
+  background:#1d4ed8;
+
+  transform:scale(1.05);
+
+}
+/* ================================
+   RESPONSIVE DESIGN
+   MOBILE OPTIMIZATION
+================================ */
+
+
+@media (max-width:768px) {
+
+
+  /* ================================
+     PLAYER CARD MOBILE
+  ================================= */
+
+
+  .player-card {
+
+    width:100%;
+
+    max-width:320px;
+
+    min-height:280px;
+
+    padding:16px;
+
+  }
+
+
+
+  .player-image {
+
+    width:100px;
+
+    height:100px;
+
+  }
+
+
+
+  .player-placeholder {
+
+    width:100px;
+
+    height:100px;
+
+    font-size:36px;
+
+  }
+
+
+
+  .player-content h3 {
+
+    font-size:18px;
+
+  }
+
+
+
+  .player-content p {
+
+    font-size:13px;
+
+  }
+
+
+
+
+  /* ================================
+     PLAYER LIST MOBILE
+  ================================= */
+
+
+  .player-list {
+
+    display:grid;
+
+    grid-template-columns:
+      repeat(1,1fr);
+
+    justify-items:center;
+
+    gap:18px;
+
+  }
+
+
+
+
+
+  /* ================================
+     PROFILE MOBILE
+  ================================= */
+
+
+  .player-profile {
+
+    padding:20px;
+
+    margin:20px auto;
+
+    border-radius:18px;
+
+  }
+
+
+
+  .profile-header {
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:18px;
+
+  }
+
+
+
+  .profile-header img {
+
+    width:130px;
+
+    height:130px;
+
+  }
+
+
+
+  .profile-info h2 {
+
+    font-size:26px;
+
+  }
+
+
+
+  .profile-info p {
+
+    font-size:14px;
+
+  }
+
+
+
+
+
+  /* ================================
+     STATS GRID MOBILE
+  ================================= */
+
+
+  .stats-grid {
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+    gap:12px;
+
+  }
+
+
+
+  .stat-card {
+
+    padding:14px;
+
+    overflow:hidden;
+
+  }
+
+
+
+  .stat-card h3 {
+
+    font-size:12px;
+
+  }
+
+
+
+  .stat-card strong {
+
+    font-size:22px;
+
+  }
+
+
+
+}
+
+
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+
+@media(max-width:420px) {
+
+
+  .stats-grid {
+
+    grid-template-columns:
+      repeat(1,1fr);
+
+  }
+
+
+
+  .player-profile {
+
+    padding:15px;
+
+  }
+
+
+
+  .profile-info h2 {
+
+    font-size:22px;
+
+  }
+
+
+}
+/* ================================
+   PLAYER CARD JSX COMPATIBILITY
+================================ */
+
+
+.player-card-image {
+
+  width:120px;
+
+  height:120px;
+
+  object-fit:contain;
+
+  border-radius:50%;
+
+  background:#e8f1ff;
+
+  padding:8px;
+
+}
+
+
+
+.player-card-info {
+
+  width:100%;
+
+  text-align:center;
+
+}
+
+
+
+.player-card-info h3 {
+
+  margin:12px 0 6px;
+
+  font-size:20px;
+
+  color:#0f172a;
+
+}
+
+
+
+.player-card-info p {
+
+  margin:5px 0;
+
+  color:#475569;
+
+  font-size:14px;
+
+}
+
+
+
+.team-name {
+
+  display:block;
+
+  margin-top:6px;
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+
+
+/* MINI STATS FIX */
+
+.mini-stats {
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:12px;
+
+  width:100%;
+
+  max-width:100%;
+
+  overflow:hidden;
+
+}
+
+
+
+.mini-stats div {
+
+  flex:1;
+
+  min-width:0;
+
+  text-align:center;
+
+}
+
+
+
+.mini-stats span {
+
+  display:block;
+
+  font-size:12px;
+
+  color:#64748b;
+
+}
+
+
+
+.mini-stats strong {
+
+  display:block;
+
+  font-size:18px;
+
+  color:#2563eb;
+
+}
+
+
+
+/* BUTTON */
+
+.view-button {
+
+  margin-top:15px;
+
+  padding:10px 18px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#2563eb;
+
+  color:white;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+}
+/* ================================
+   PLAYER PROFILE JSX FIX
+================================ */
+
+
+.profile-card {
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:30px auto;
+
+  padding:30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #edf5ff
+    );
+
+  border-radius:24px;
+
+  box-shadow:
+    0 15px 40px rgba(15,40,90,.15);
+
+  display:flex;
+
+  gap:30px;
+
+  box-sizing:border-box;
+
+  overflow:hidden;
+
+}
+
+
+
+.profile-left {
+
+  flex:0 0 auto;
+
+}
+
+
+
+.profile-right {
+
+  flex:1;
+
+  min-width:0;
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .profile-card{
+
+    flex-direction:column;
+
+    align-items:center;
+
+    padding:20px;
+
+  }
+
+
+  .profile-right{
+
+    width:100%;
+
+    text-align:center;
+
+  }
+
+}
+/* =================================
+   SEASON STATS FINAL FIX
+================================= */
+
+
+.season-stats {
+
+  width:100%;
+
+  max-width:100%;
+
+  overflow:hidden;
+
+}
+
+
+
+.season-stats h3 {
+
+  margin-bottom:20px;
+
+  color:#0f172a;
+
+}
+
+
+
+.stats-grid {
+
+  width:100%;
+
+  max-width:100%;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0,1fr));
+
+  gap:16px;
+
+}
+
+
+
+.stat-card {
+
+  min-width:0;
+
+  width:100%;
+
+  overflow:hidden;
+
+  box-sizing:border-box;
+
+}
+
+
+
+.stat-label {
+
+  display:block;
+
+  font-size:13px;
+
+  color:#64748b;
+
+}
+
+
+
+.stat-value {
+
+  margin-top:8px;
+
+  font-size:24px;
+
+  color:#2563eb;
+
+}
+
+
+
+
+@media(max-width:768px){
+
+  .stats-grid {
+
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:12px;
+
+  }
+
+
+}
+
+
+
+@media(max-width:420px){
+
+  .stats-grid {
+
+    grid-template-columns:
+      repeat(1,minmax(0,1fr));
+
+  }
+
+}

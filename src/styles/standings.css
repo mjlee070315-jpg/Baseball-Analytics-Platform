@@ -1,0 +1,541 @@
+/* =================================
+   STANDINGS PAGE
+   MLB ANALYTICS STYLE
+================================= */
+
+
+/* ================================
+   STANDINGS CONTAINER
+================================ */
+
+.standings-container {
+
+  width:100%;
+
+  max-width:1200px;
+
+  margin:40px auto;
+
+  padding:20px;
+
+}
+
+
+
+/* ================================
+   TITLE
+================================ */
+
+.standings-title {
+
+  text-align:center;
+
+  margin-bottom:35px;
+
+  color:#0f172a;
+
+  font-size:32px;
+
+  font-weight:800;
+
+}
+
+
+
+/* ================================
+   DIVISION SECTION
+================================ */
+
+.division-section {
+
+  margin-bottom:45px;
+
+}
+
+
+
+.division-title {
+
+  margin-bottom:18px;
+
+  font-size:22px;
+
+  color:#1e40af;
+
+  font-weight:700;
+
+}
+
+
+
+/* ================================
+   STANDINGS TABLE
+================================ */
+
+.standings-table-wrapper {
+
+  overflow-x:auto;
+
+  border-radius:18px;
+
+  box-shadow:
+
+  0 12px 30px rgba(15,45,90,.12);
+
+}
+
+
+
+.standings-table {
+
+  width:100%;
+
+  border-collapse:collapse;
+
+  background:white;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+}
+
+
+
+.standings-table thead {
+
+  background:#1d4ed8;
+
+  color:white;
+
+}
+
+
+
+.standings-table th {
+
+  padding:15px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  font-weight:700;
+
+}
+
+
+
+.standings-table td {
+
+  padding:15px;
+
+  text-align:center;
+
+  color:#334155;
+
+  border-bottom:1px solid #e2e8f0;
+
+}
+
+
+
+/* ================================
+   TEAM ROW
+================================ */
+
+.team-row {
+
+  cursor:pointer;
+
+  transition:.2s ease;
+
+}
+
+
+
+.team-row:hover {
+
+  background:#eff6ff;
+
+  transform:scale(1.01);
+
+}
+
+
+
+/* ================================
+   TEAM INFO
+================================ */
+
+.team-name {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:flex-start;
+
+  gap:14px;
+
+  font-weight:700;
+
+  color:#0f172a;
+
+}
+
+
+
+.team-logo {
+
+  width:42px;
+
+  height:42px;
+
+  object-fit:contain;
+
+}
+
+
+
+.team-record {
+
+  font-weight:700;
+
+  color:#2563eb;
+
+}
+
+
+
+/* ================================
+   WIN PERCENTAGE
+================================ */
+
+.win-percentage {
+
+  font-weight:700;
+
+  color:#16a34a;
+
+}
+
+
+
+/* ================================
+   GAMES BACK
+================================ */
+
+.games-back {
+
+  color:#64748b;
+
+}
+
+
+
+/* =====================================
+   TEAM CARD
+===================================== */
+
+.team-card{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:22px;
+
+  border-radius:20px;
+
+  margin-bottom:18px;
+
+  cursor:pointer;
+
+  color:white;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--team-primary),
+    var(--team-secondary)
+  );
+
+  box-shadow:
+  0 12px 28px rgba(0,0,0,.18);
+
+  transition:.25s;
+
+}
+
+.team-card:hover{
+
+  transform:translateY(-4px);
+
+}
+
+.team-card-left{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:18px;
+
+}
+
+.team-logo{
+
+  width:72px;
+
+  height:72px;
+
+  object-fit:contain;
+
+  background:white;
+
+  border-radius:50%;
+
+  padding:8px;
+
+}
+
+.team-card-info h3{
+
+  margin:0;
+
+  font-size:30px;
+
+  color:white;
+
+}
+
+.team-card-info p{
+
+  margin-top:6px;
+
+  color:rgba(255,255,255,.85);
+
+  font-size:15px;
+
+}
+
+.team-card-record{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:14px;
+
+  text-align:right;
+
+}
+
+.record-item{
+
+  display:flex;
+
+  flex-direction:column;
+
+}
+
+.record-item span{
+
+  font-size:12px;
+
+  color:rgba(255,255,255,.7);
+
+}
+
+.record-item strong{
+
+  font-size:18px;
+
+}
+
+
+
+/* ================================
+   ROSTER SECTION
+================================ */
+
+.roster-container {
+
+  margin-top:35px;
+
+}
+
+
+
+.roster-grid {
+
+  display:grid;
+
+  grid-template-columns:
+
+  repeat(auto-fit,minmax(220px,1fr));
+
+  gap:20px;
+
+}
+
+
+
+.roster-card {
+
+  background:white;
+
+  border-radius:16px;
+
+  padding:18px;
+
+  text-align:center;
+
+  box-shadow:
+
+  0 8px 20px rgba(15,45,90,.1);
+
+  transition:.2s ease;
+
+}
+
+
+
+.roster-card:hover {
+
+  transform:translateY(-5px);
+
+}
+
+
+
+.roster-card img {
+
+  width:100px;
+
+  height:100px;
+
+  object-fit:contain;
+
+}
+
+
+
+.roster-card h4 {
+
+  margin:12px 0 5px;
+
+  color:#0f172a;
+
+}
+
+
+
+.roster-card p {
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media(max-width:768px){
+
+
+.standings-container{
+
+  padding:15px;
+
+}
+
+
+.standings-title{
+
+  font-size:26px;
+
+}
+
+
+.standings-table th,
+
+.standings-table td{
+
+  padding:10px;
+
+  font-size:13px;
+
+}
+
+
+.team-logo{
+
+  width:32px;
+
+  height:32px;
+
+}
+
+
+}
+@media (max-width:768px){
+
+.team-card{
+
+  padding:16px;
+
+  align-items:flex-start;
+
+}
+
+.team-card-left{
+
+  gap:14px;
+
+}
+
+.team-logo{
+
+  width:58px;
+
+  height:58px;
+
+}
+
+.team-card-info h3{
+
+  font-size:22px;
+
+}
+
+.team-card-info p{
+
+  font-size:12px;
+
+}
+
+.team-card-record{
+
+  gap:8px;
+
+}
+
+.record-item strong{
+
+  font-size:15px;
+
+}
+
+.record-item span{
+
+  font-size:11px;
+
+}
+
+}

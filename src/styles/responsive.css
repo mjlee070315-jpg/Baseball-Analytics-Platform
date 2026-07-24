@@ -1,0 +1,358 @@
+/* =================================
+   RESPONSIVE DESIGN
+   MLB ANALYTICS STYLE
+================================= */
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1024px) {
+
+
+.main-content {
+
+  padding:30px 20px;
+
+}
+
+
+.player-card {
+
+  width:230px;
+
+}
+
+
+.profile-header {
+
+  gap:20px;
+
+}
+
+
+.games-grid {
+
+  grid-template-columns:
+
+  repeat(2,1fr);
+
+}
+
+
+.analytics-grid {
+
+  grid-template-columns:
+
+  repeat(2,1fr);
+
+}
+
+
+.grid-3 {
+
+  grid-template-columns:
+
+  repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width:768px) {
+
+
+
+/* APP */
+
+.main-content {
+
+  padding:20px 15px;
+
+}
+
+
+
+/* NAVBAR */
+
+.navbar {
+
+  padding:15px 20px;
+
+}
+
+
+.nav-links {
+
+  gap:12px;
+
+  font-size:14px;
+
+}
+
+
+
+/* HERO */
+
+.hero {
+
+  padding:70px 20px;
+
+  text-align:center;
+
+}
+
+
+.hero h1 {
+
+  font-size:34px;
+
+}
+
+
+.hero p {
+
+  font-size:16px;
+
+}
+
+
+
+/* SEARCH */
+
+.search-container {
+
+  flex-direction:column;
+
+  width:100%;
+
+}
+
+
+.search {
+
+  width:100%;
+
+}
+
+
+.search-button {
+
+  width:100%;
+
+}
+
+
+
+/* PLAYER */
+
+.player-list {
+
+  flex-direction:column;
+
+  align-items:center;
+
+}
+
+
+.player-card {
+
+  width:90%;
+
+}
+
+
+.player-profile {
+
+  padding:20px;
+
+}
+
+
+.profile-header {
+
+  flex-direction:column;
+
+  text-align:center;
+
+}
+
+
+.profile-header img {
+
+  width:130px;
+
+  height:130px;
+
+}
+
+
+.stats-grid {
+
+  grid-template-columns:
+
+  repeat(2,1fr);
+
+}
+
+
+
+/* GAMES */
+
+.games-grid {
+
+  grid-template-columns:1fr;
+
+}
+
+
+.game-teams {
+
+  gap:8px;
+
+}
+
+
+.game-score {
+
+  font-size:24px;
+
+}
+
+
+
+/* STANDINGS */
+
+.standings-container {
+
+  padding:15px;
+
+}
+
+
+.standings-table {
+
+  min-width:700px;
+
+}
+
+
+
+/* ANALYTICS */
+
+.analytics-grid {
+
+  grid-template-columns:1fr;
+
+}
+
+
+.kpi-grid {
+
+  grid-template-columns:
+
+  repeat(2,1fr);
+
+}
+
+
+.chart-container {
+
+  height:260px;
+
+}
+
+
+
+/* COMMON GRID */
+
+.grid-2,
+
+.grid-3 {
+
+  grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width:480px) {
+
+
+
+.hero h1 {
+
+  font-size:28px;
+
+}
+
+
+
+.section-title {
+
+  font-size:24px;
+
+}
+
+
+
+.player-card {
+
+  padding:15px;
+
+}
+
+
+
+.player-image,
+
+.player-placeholder {
+
+  width:100px;
+
+  height:100px;
+
+}
+
+
+
+.stats-grid {
+
+  grid-template-columns:1fr;
+
+}
+
+
+
+.kpi-grid {
+
+  grid-template-columns:1fr;
+
+}
+
+
+
+.game-card {
+
+  padding:16px;
+
+}
+
+
+
+}

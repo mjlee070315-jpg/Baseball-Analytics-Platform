@@ -54,6 +54,17 @@ function TeamCard({ team, index, onClick }) {
 
 
         <div className="team-card-info">
+            {
+  isLeader && (
+
+    <span className="leader-badge">
+
+      ★ Division Leader
+
+    </span>
+
+  )
+}
 
 
           <h3>
@@ -82,63 +93,22 @@ function TeamCard({ team, index, onClick }) {
 
       <div className="team-card-record">
 
+  <div className="record-item">
+    <span>Record</span>
+    <strong>{team.wins} - {team.losses}</strong>
+  </div>
 
-        <div>
+  <div className="record-item">
+    <span>Win %</span>
+    <strong>{team.winPercentage}</strong>
+  </div>
 
-          <span>
-            Record
-          </span>
+  <div className="record-item">
+    <span>GB</span>
+    <strong>{team.gamesBack ?? "-"}</strong>
+  </div>
 
-
-          <strong>
-
-            {team.wins} - {team.losses}
-
-          </strong>
-
-
-        </div>
-
-
-
-        <div>
-
-          <span>
-            Win %
-          </span>
-
-
-          <strong>
-
-            {team.winPercentage}
-
-          </strong>
-
-
-        </div>
-
-
-
-        <div>
-
-          <span>
-            GB
-          </span>
-
-
-          <strong>
-
-            {team.gamesBack ?? "-"}
-
-          </strong>
-
-
-        </div>
-
-
-
-      </div>
-
+</div>
 
 
     </div>

@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
+import "../styles/hero.css";
+
 import {
   searchPlayers,
   getPlayerDetails,
@@ -286,35 +288,49 @@ useEffect(()=>{
       <section className="hero">
 
 
-        <h1>
-
-          MLB Analytics Platform
-
-        </h1>
+  <div className="hero-content">
 
 
+    <h1>
 
-        <p>
+      Diamond Analytics
 
-          Search MLB Players and Analyze Real Statistics
-
-        </p>
+    </h1>
 
 
 
+    <h2>
 
-        <SearchBar
+      Advanced MLB Analytics Platform
 
-          search={search}
-
-          setSearch={setSearch}
-
-          onSearch={handleSearch}
-
-        />
+    </h2>
 
 
-      </section>
+
+    <p>
+
+      Search MLB players, explore real-time statistics,
+      and analyze performance with MLB data.
+
+    </p>
+
+
+
+    <SearchBar
+
+      search={search}
+
+      setSearch={setSearch}
+
+      onSearch={handleSearch}
+
+    />
+
+
+  </div>
+
+
+</section>
 
       <section className="today-games-section">
 

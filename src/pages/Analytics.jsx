@@ -2,6 +2,7 @@ import StatsChart from "../components/StatsChart";
 import PerformanceChart from "../components/PerformanceChart";
 import StatSummary from "../components/StatSummary";
 
+import "../styles/analytics.css";
 
 function Analytics({
 

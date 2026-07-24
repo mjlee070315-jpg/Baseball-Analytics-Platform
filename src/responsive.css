@@ -1,0 +1,248 @@
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media (max-width:768px){
+
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:50px 20px 70px;
+  min-height:auto;
+  text-align:center;
+}
+
+.hero-content{
+  width:100%;
+  max-width:360px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero h1{
+  font-size:34px;
+  line-height:1.1;
+  margin:0 0 12px;
+  word-break:keep-all;
+}
+
+.hero h2{
+  font-size:18px;
+  margin:0 0 12px;
+}
+
+.hero p{
+  font-size:14px;
+  line-height:1.5;
+  margin:0 0 24px;
+  max-width:320px;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-container{
+  width:100%;
+  max-width:320px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+.search,
+.search-button{
+  width:100%;
+  height:46px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  width:100%;
+  max-width:100%;
+  padding:10px;
+  overflow:hidden;
+}
+
+
+/* =========================
+   PLAYER CARDS
+========================= */
+
+.stats-grid,
+.trending-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:8px;
+}
+
+.player-card{
+  width:100%;
+  padding:12px;
+  border-radius:16px;
+}
+
+.player-image{
+  height:150px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.player-card h3{
+  font-size:16px;
+  margin-top:10px;
+}
+
+.position{
+  font-size:12px;
+}
+
+.player-stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.player-stats span{
+  font-size:10px;
+}
+
+.player-stats b{
+  font-size:13px;
+}
+
+
+/* =========================
+   ANALYTICS
+========================= */
+
+.analytics-section{
+  width:100%;
+  padding:10px;
+  overflow:hidden;
+}
+
+.analytics-profile{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:15px;
+  padding:15px;
+}
+
+.analytics-player-image{
+  width:130px;
+  height:130px;
+}
+
+.analytics-profile h1{
+  font-size:24px;
+}
+
+
+/* =========================
+   STAT SUMMARY
+========================= */
+
+.stat-card{
+  padding:10px;
+}
+
+.stat-card h3{
+  font-size:12px;
+}
+
+.stat-card p{
+  font-size:18px;
+}
+
+
+/* =========================
+   CHART
+========================= */
+
+.chart-card{
+  width:100%;
+  padding:10px;
+  overflow:hidden;
+}
+
+.chart-card h2{
+  font-size:18px;
+}
+
+
+/* =========================
+   GAMES
+========================= */
+
+.today-games-scroll{
+  width:100%;
+  overflow-x:auto;
+}
+
+.game-card{
+  min-width:270px;
+  padding:12px;
+}
+
+
+/* =========================
+   STANDINGS
+========================= */
+
+.standings-table{
+  width:100%;
+  overflow-x:auto;
+}
+
+.standings-table table{
+  min-width:600px;
+}
+
+
+/* =========================
+   COMPARE
+========================= */
+
+.compare-section{
+  padding:10px;
+}
+
+}

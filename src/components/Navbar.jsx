@@ -1,57 +1,61 @@
+import { useState, } from "react";
+import "../styles/navbar.css";
+
 function Navbar({ setPage }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+    setMenuOpen(false);
+  };
 
   return (
-
     <nav className="navbar">
-
       <div className="navbar-logo">
-        ⚾ MLB Analytics
+        <img
+          src="/logo.svg"
+          className="navbar-logo-image"
+          alt="Diamond Analytics"
+        />
+        <span>
+          Diamond Analytics
+        </span>
       </div>
 
-      <div className="nav-links">
+      <button
+        className="menu-toggle"
+        onClick={() => setMenuOpen(prev => !prev)}
+      >
+        ☰
+      </button>
 
+      <div className={`nav-links ${menuOpen ? "active" : ""}`}>
         <button
-          onClick={() => {
-            console.log("HOME");
-            setPage("home");
-          }}
+          onClick={() => handlePageChange("home")}
         >
           Players
         </button>
 
         <button
-          onClick={() => {
-            console.log("STANDINGS");
-            setPage("standings");
-          }}
+          onClick={() => handlePageChange("standings")}
         >
           Standings
         </button>
 
         <button
-          onClick={() => {
-            console.log("ANALYTICS");
-            setPage("analytics");
-          }}
+          onClick={() => handlePageChange("analytics")}
         >
           Analytics
         </button>
 
         <button
-          onClick={() => {
-            console.log("GAMES");
-            setPage("games");
-          }}
+          onClick={() => handlePageChange("games")}
         >
           Games
         </button>
-
       </div>
-
     </nav>
-
   );
-
 }
 
 export default Navbar;
